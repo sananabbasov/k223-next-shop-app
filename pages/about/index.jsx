@@ -1,17 +1,11 @@
-import Sidebar from '@/layout/Sidebar'
 import React from 'react'
 
-function test() {
-    return (
-        <div>about</div>
-    )
+function About() {
+  return (
+    <>
+      <div>About</div>
+    </>
+  )
 }
-test.getLayout = function getLayout(page) {
-    return (
-        <Sidebar>
-           {page}
-        </Sidebar>
-    )
-}
-export default test
 
+export default About

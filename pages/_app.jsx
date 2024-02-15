@@ -3,9 +3,14 @@ import React from 'react'
 
 function MyApp({ Component, pageProps }) {
     return (
+        <>
+        
+        <title>About - Coding with Chris</title>
         <Layout>
             <Component {...pageProps} />
         </Layout>
+        </>
+       
     )
 }
 
