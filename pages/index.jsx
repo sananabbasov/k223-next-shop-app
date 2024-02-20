@@ -3,6 +3,9 @@ import { BASE_URL } from '@/config/apiconfig'
 import React, { useEffect, useState } from 'react'
 
 export default  function index({ products }) {
+
+  const  [productList, setProductList] = useState([])
+
   return (
     <>
       <div className='container flex flex-wrap m-auto'>
