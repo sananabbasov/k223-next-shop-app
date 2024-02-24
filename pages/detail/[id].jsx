@@ -13,7 +13,6 @@ function Detail({product}) {
 export async function getServerSideProps(router) {
   const res = await fetch(`http://localhost:4000/products/${router.query.id}`) 
   const product = await res.json()
-  console.log(product);
   return { props: { product } }
 }
 

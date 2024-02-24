@@ -3,9 +3,11 @@ import { BASE_URL } from '@/config/apiconfig'
 import { Pagination } from '@mui/material'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
 export default  function index({ products }) {
-
+  const {thmeMode} = useSelector((state) => state)
+  console.log(thmeMode.value);
   const  [productList, setProductList] = useState([])
   const [page, setPage] = useState(1);
 
@@ -16,7 +18,7 @@ export default  function index({ products }) {
   }
 
   return (
-    <>
+    <div className={thmeMode.value ? 'bg-black' : ''}>
       <div className='container flex flex-wrap m-auto'>
         {
           products &&
@@ -24,12 +26,12 @@ export default  function index({ products }) {
             <ProductCard  productId={product.id} productName={product.title} productImage={product.image} key={index} />
           ))
         }
-        <Pagination onChange={pageHandler} count={3} page={page} variant="outlined" shape="rounded" />
+        <Pagination className='bg-white' onChange={pageHandler} count={3} page={page} variant="outlined" shape="rounded" />
       </div>
 
 
       <div>index</div>
-    </>
+    </div>
   )
 }
 
