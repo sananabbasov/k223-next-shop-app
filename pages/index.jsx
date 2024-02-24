@@ -1,10 +1,19 @@
 import ProductCard from '@/components/ProductCard'
 import { BASE_URL } from '@/config/apiconfig'
+import { Pagination } from '@mui/material'
+import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
 export default  function index({ products }) {
 
   const  [productList, setProductList] = useState([])
+  const [page, setPage] = useState(1);
+
+  const router = useRouter();
+  const pageHandler = (event, newPage) =>{
+    router.push(`?page=${newPage}`, { scroll: false })
+    setPage(newPage)
+  }
 
   return (
     <>
@@ -12,9 +21,10 @@ export default  function index({ products }) {
         {
           products &&
           products.map((product, index) => (
-            <ProductCard productName={product.product_name} key={index} />
+            <ProductCard  productId={product.id} productName={product.title} productImage={product.image} key={index} />
           ))
         }
+        <Pagination onChange={pageHandler} count={3} page={page} variant="outlined" shape="rounded" />
       </div>
 
 
@@ -23,10 +33,11 @@ export default  function index({ products }) {
   )
 }
 
-export async function getServerSideProps() {
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
-  const res = await fetch(`https://localhost:7037/api/v1/Product/getall`)
-  const data = await res.json()
-  const products = data.products;
+export async function getServerSideProps({query}) {
+  // query string 
+  let pageNo = query.page ?? 1;
+  const res = await fetch(`http://localhost:4000/products?_page=${pageNo}&_per_page=8`)
+  const response = await res.json()
+  const products = response.data
   return { props: { products } }
 }
